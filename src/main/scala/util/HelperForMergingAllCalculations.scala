@@ -49,11 +49,12 @@ object HelperForMergingAllCalculations {
     }
   }
 
-  /** Mapping of ParseResult Type to Option.
+  /** Mapping of ParseResult Type to Validated.
     *
     * @param  listResult : List of parsed HashMaps of Resource/Activities
     *                           constructed from each row of the file.
-    * @return returns List of Option of Resource/Activities HashMaps*/
+    * @return returns List of Validated of Resource/Activities HashMaps
+    */
   def validatingParseResult(
     listResult: List[ParseResult[ResourceActivities]]
   ): List[ValidatedNec[String, ResourceActivities]] =
