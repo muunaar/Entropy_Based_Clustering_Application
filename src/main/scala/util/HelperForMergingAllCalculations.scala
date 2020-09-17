@@ -1,15 +1,20 @@
 package util
 
+import cats.data.Validated.{Invalid, Valid}
 import cats.effect.IO
 import cats.implicits._
 import cats.data.ValidatedNec
 import io.chrisdavenport.log4cats.Logger
 
+import scala.collection.immutable.HashMap
+
 object HelperForMergingAllCalculations {
 
   import DataParser._
-  import FileUtilities._
   import Exceptions._
+  import EntropyCalculation._
+  import FileUtilities._
+  import SimilarityCalculation._
 
   def fileToClusters(file: String,
                      beta: Double)(implicit logger: Logger[IO]): IO[Unit] = {
@@ -23,8 +28,24 @@ object HelperForMergingAllCalculations {
 
       val listValidatedResAc: ValidatedNec[String, List[ResourceActivities]] =
         validResourceActivity.sequence
-      IO(listValidatedResAc)
 
+      listValidatedResAc match {
+        case Invalid(_) =>
+          IO.raiseError(FileNotCorrectlyFormated)
+        case Valid(list) =>
+          val resourceActivityMap =
+            list.foldLeft(HashMap.empty[String, List[String]]) { (acc, el) =>
+              acc ++ HashMap(el.resource -> el.activities)
+            }
+
+          val similarityMatrix: Map[String, Map[String, Double]] =
+            ConstructingSimilarityMap(resourceActivityMap)
+
+          val entropyMatrix: Map[String, Double] =
+            constructEntropyMap(similarityMatrix)
+          IO(entropyMatrix)
+
+      }
     }
   }
 
