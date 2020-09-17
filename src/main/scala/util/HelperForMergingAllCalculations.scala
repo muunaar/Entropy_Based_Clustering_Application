@@ -15,21 +15,24 @@ object HelperForMergingAllCalculations {
   import EntropyCalculation._
   import FileUtilities._
   import SimilarityCalculation._
+  import Clustering._
 
   def fileToClusters(file: String,
                      beta: Double)(implicit logger: Logger[IO]): IO[Unit] = {
     openFile(file).use { source =>
-      val parsedMap: List[ParseResult[ResourceActivities]] =
+      val parsingResourceActivitiesHashmap
+        : List[ParseResult[ResourceActivities]] =
         source.getLines().toList.map(e => parse(mapResourceActivity, e))
 
       val validResourceActivity
         : List[ValidatedNec[String, ResourceActivities]] =
-        validatingParseResult(parsedMap)
+        validatingParseResult(parsingResourceActivitiesHashmap)
 
-      val listValidatedResAc: ValidatedNec[String, List[ResourceActivities]] =
+      val traverseMapDataToOption
+        : ValidatedNec[String, List[ResourceActivities]] =
         validResourceActivity.sequence
 
-      listValidatedResAc match {
+      traverseMapDataToOption match {
         case Invalid(_) =>
           IO.raiseError(FileNotCorrectlyFormated)
         case Valid(list) =>
@@ -38,13 +41,16 @@ object HelperForMergingAllCalculations {
               acc ++ HashMap(el.resource -> el.activities)
             }
 
-          val similarityMatrix: Map[String, Map[String, Double]] =
+          val jaccardSimilarityIndexMap: Map[String, Map[String, Double]] =
             ConstructingSimilarityMap(resourceActivityMap)
 
           val entropyMatrix: Map[String, Double] =
-            constructEntropyMap(similarityMatrix)
-          IO(entropyMatrix)
+            constructEntropyMap(jaccardSimilarityIndexMap)
 
+          val clustersOfResources =
+            clustering(jaccardSimilarityIndexMap, entropyMatrix, beta)
+
+          displayClusters(clustersOfResources, logger)
       }
     }
   }
