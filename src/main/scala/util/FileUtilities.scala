@@ -1,13 +1,13 @@
 package util
 
 import cats.effect.{IO, Resource}
+import io.chrisdavenport.log4cats.Logger
 
 import scala.io.BufferedSource
-import io.chrisdavenport.log4cats.Logger
 
 /** Englobes all methods related to reading the data file, opening it
   * as well as the similarity Threashold used later in clustering
-
+  *
   */
 object FileUtilities {
 
