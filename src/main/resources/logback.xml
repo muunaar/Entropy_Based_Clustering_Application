@@ -1,0 +1,28 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <withJansi>true</withJansi>
+        <encoder>
+            <pattern>%d %green([%thread]) %highlight(%-5level) %blue(%logger{15}) - %msg %n</pattern>
+        </encoder>
+    </appender>
+    <appender name="STDOUT-INFO" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <withJansi>true</withJansi>
+        <encoder>
+            <pattern>%d %green([%thread]) %green(%-5level) %blue(%logger{15}) - %msg %n</pattern>
+        </encoder>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="STDOUT-INFO" />
+    </root>
+</configuration>

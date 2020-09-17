@@ -1,0 +1,17 @@
+.class
+*.log
+*.iml
+*.ipr
+*.iws
+.idea
+.cache/
+.history/
+.lib/
+target/
+project/boot/
+project/plugins/project/
+project/project/
+project/target/
+target/
+.scala_dependencies
+.worksheet
