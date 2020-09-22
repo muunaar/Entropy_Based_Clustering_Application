@@ -212,18 +212,18 @@ object Clustering {
                  resource: String,
                  beta: Double): (Map[String, Double], (String, Set[String])) = {
 
-    (checkIfKey(resource, s), (checkIfValue(resource, s))) match {
+    (checkIfKey(resource, s), checkIfValue(resource, s)) match {
 
-      case (true, true) => {
+      case (true, true) =>
         mergeResults(
           caseKey(s, entropy, resource, beta),
           caseValue(s, entropy, resource, beta),
           resource
         )
-      }
 
       case (true, false) => caseKey(s, entropy, resource, beta)
       case (false, true) => caseValue(s, entropy, resource, beta)
+      case _             => (Map.empty[String, Double], ("", Set.empty[String]))
     }
   }
 
