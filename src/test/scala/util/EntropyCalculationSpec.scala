@@ -5,7 +5,7 @@ import org.scalatest.{FlatSpec, Matchers}
 import scala.collection.immutable.HashMap
 
 class EntropyCalculationSpec extends FlatSpec with Matchers {
-
+  import EntropyCalculation._
   "Check if a resource exists in entropy Map" should "return true " in {
 
     val entropyMap = HashMap("Haley" -> 0.2, "Mia" -> 0.3)

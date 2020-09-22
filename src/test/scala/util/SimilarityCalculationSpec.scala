@@ -5,7 +5,7 @@ import org.scalatest.{FlatSpec, Matchers}
 import scala.collection.immutable.HashMap
 
 class SimilarityCalculationSpec extends FlatSpec with Matchers {
-
+  import SimilarityCalculation._
   "Resource performing the given list of activities" should "be returned" in {
 
     assert(
