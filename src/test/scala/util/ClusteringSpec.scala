@@ -5,7 +5,7 @@ import org.scalatest.{FlatSpec, Matchers}
 import scala.collection.immutable.HashMap
 
 class ClusteringSpec extends FlatSpec with Matchers {
-
+  import Clustering._
   "Minimum Resource" should " have the lowest entropy value" in {
 
     val entopy: HashMap[String, Double] =
