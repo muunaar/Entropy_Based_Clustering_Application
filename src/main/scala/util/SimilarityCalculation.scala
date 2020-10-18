@@ -1,3 +1,6 @@
+/*
+  This one could also be in the core package in my opinion
+ */
 package util
 
 import scala.collection.immutable.HashMap
@@ -162,6 +165,7 @@ object SimilarityCalculation {
     resourceActivityMap: HashMap[String, List[String]]
   ): Map[String, Map[String, Double]] = {
 
+    //Rename variable 'a' to 'pairs' maybe?
     val a = getPairs(resourceActivityMap)
 
     val keys = a.foldLeft(List.empty[(String, String)]) { (acc, el) =>

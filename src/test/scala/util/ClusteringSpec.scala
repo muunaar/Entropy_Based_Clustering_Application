@@ -25,6 +25,9 @@ class ClusteringSpec extends FlatSpec with Matchers {
 
   "if the similarity threshold is greater than beta" should "return true " in {
 
+    /* add a case where the value is equal to the beta
+      assert(compareSimilarityIndexToBeta(0.5, 0.5))
+     */
     assert(compareSimilarityIndexToBeta(0.54, 0.5))
   }
 
@@ -41,6 +44,8 @@ class ClusteringSpec extends FlatSpec with Matchers {
     )
 
     assert(checkIfKey("Haley", testMap))
+    // add this one too to make sure your method works with multiple keys
+    // assert(checkIfKey("Deran", testMap))
   }
 
   "If the resource is not positioned as a key in similarity map" should "return false" in {
@@ -50,6 +55,9 @@ class ClusteringSpec extends FlatSpec with Matchers {
       "Deran" -> HashMap("Susan" -> 0.0),
     )
 
+    /*
+      Sue is not even part of your testMap, would be nice to also add a test with Susan for example
+     */
     assert(!checkIfKey("Sue", testMap))
   }
 
@@ -61,6 +69,11 @@ class ClusteringSpec extends FlatSpec with Matchers {
     )
 
     assert(checkIfValue("Susan", testMap))
+    /*
+      Add Mike and Deran here too
+      assert(checkIfValue("Mike", testMap))
+      assert(checkIfValue("Deran", testMap))
+     */
   }
 
   "If a resource is not positioned in a key in values map in similarity map" should "return false" in {
@@ -71,6 +84,9 @@ class ClusteringSpec extends FlatSpec with Matchers {
     )
 
     assert(checkIfValue("Sam", testMap) == false)
+    /*
+      Sam is not even part of your testMap, would be nice to also add a test with Haley
+     */
   }
 
   "Removing elements from Entropy map" should "return an entropy map without the resource passed as parameter" in {

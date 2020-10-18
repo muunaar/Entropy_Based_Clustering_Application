@@ -1,3 +1,6 @@
+/*
+  This one could also be in the core package in my opinion
+ */
 package util
 
 import scala.collection.immutable.HashMap

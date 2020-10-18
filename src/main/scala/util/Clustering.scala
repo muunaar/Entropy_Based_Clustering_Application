@@ -1,3 +1,6 @@
+/*
+  I think this object should be on the core package, since Clustering is even part of the project name
+ */
 package util
 
 import cats.effect.IO
@@ -56,6 +59,7 @@ object Clustering {
         acc + el
       } else acc
     }
+    //If you replace all your HashMaps by Maps you can just return "entropy - resource" here
   }
 
   /** Checks of a resource is positioned as a key in similarity map.

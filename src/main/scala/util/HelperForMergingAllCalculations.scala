@@ -36,6 +36,12 @@ object HelperForMergingAllCalculations {
         case Invalid(_) =>
           IO.raiseError(FileNotCorrectlyFormated)
         case Valid(list) =>
+
+          /*
+            you can also use groupMapReduce to retrieve resourceActivityMap:
+            val resourceActivityMap = list.groupMapReduce(_.resource)(_.activities)((a, b) => a ++ b)
+            Then you'll have to switch the HashMaps to Maps
+           */
           val resourceActivityMap =
             list.foldLeft(HashMap.empty[String, List[String]]) { (acc, el) =>
               acc ++ HashMap(el.resource -> el.activities)
@@ -47,6 +53,10 @@ object HelperForMergingAllCalculations {
           val entropyMatrix: Map[String, Double] =
             constructEntropyMap(jaccardSimilarityIndexMap)
 
+          /*
+            Since the method name is fileToClusters you could return the clusters here and call the display method in
+            Main. Then you could also create some tests for this method
+           */
           val clustersOfResources =
             clustering(jaccardSimilarityIndexMap, entropyMatrix, beta)
 
