@@ -20,6 +20,7 @@ object Main extends IOApp {
 
       beta <- readBeta
       _ <- logger.trace(s"Receiving the clustering threshold Beta = $beta")
+      //The validation below could even be part of the readBeta method
       _ <- if (compareBetaToRange(beta)) {
         logger.info("Similarity threshold received successfully")
       } else {
@@ -46,6 +47,10 @@ object Main extends IOApp {
             logger.error(FileNotCorrectlyFormated.toString)
           case _ => logger.error("Unexpected Error has occured")
         }
+        /*
+          Not sure if that's by design, but you are returning success code even if the program fails (beta out of range or
+          file does not exists for example)
+         */
         .as(ExitCode.Success)
         .guaranteeCase {
           case Canceled =>
